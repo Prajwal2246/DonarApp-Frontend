@@ -3,7 +3,7 @@ import "./App.css";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Home from "./pages/Home";
-import RegisterAsDonar from "./pages/registerAsDonar";
+import RegisterAsDonar from "./pages/RegisterAsDonar";
 import Donorlist from "./pages/Donorlist";
 import MyRequests from "./pages/MyRequests";
 import ReceivedRequests from "./pages/ReceivedRequests";
