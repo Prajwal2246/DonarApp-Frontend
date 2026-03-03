@@ -24,7 +24,7 @@ function Navbar() {
           style={{ padding: "8px", width: "48px", height: "48px" }}
         >
           <img
-            src="/public/logo.jpg"
+            src="/logo.jpg"
             alt="App Logo"
             className="w-full h-full object-contain"
           />
