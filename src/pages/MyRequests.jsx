@@ -33,7 +33,6 @@ function MyRequests() {
           },
         });
 
-        console.log(res.data);
         setRequests(res.data);
       } catch (error) {
         console.error(error);
@@ -44,12 +43,21 @@ function MyRequests() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100" style={{ padding: 24 }}>
-      <h1 className="text-3xl font-bold text-gray-900" style={{ marginBottom: 24 }}>
+    <div
+      className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100"
+      style={{ padding: 24 }}
+    >
+      <h1
+        className="text-3xl font-bold text-gray-900"
+        style={{ marginBottom: 24 }}
+      >
         Your Requests
       </h1>
       {requests.length === 0 ? (
-        <div className="bg-white rounded-xl shadow-md border border-gray-200 text-center text-gray-600" style={{ padding: 32 }}>
+        <div
+          className="bg-white rounded-xl shadow-md border border-gray-200 text-center text-gray-600"
+          style={{ padding: 32 }}
+        >
           <p className="text-lg">📭 You haven't made any requests yet.</p>
         </div>
       ) : (
@@ -67,8 +75,8 @@ function MyRequests() {
       req.Status?.toLowerCase() === "accepted"
         ? "bg-green-500 text-white"
         : req.Status?.toLowerCase() === "rejected"
-        ? "bg-red-500 text-white"
-        : "bg-yellow-500 text-white"
+          ? "bg-red-500 text-white"
+          : "bg-yellow-500 text-white"
     }`}
               >
                 {req.Status?.toUpperCase()}
@@ -76,16 +84,24 @@ function MyRequests() {
 
               <div style={{ marginBottom: 12 }}>
                 <p className="text-gray-700" style={{ marginBottom: 6 }}>
-                  <strong className="text-gray-900 font-semibold">Requested to:</strong>{" "}
+                  <strong className="text-gray-900 font-semibold">
+                    Requested to:
+                  </strong>{" "}
                   <span className="text-gray-800">{req.donorId.name}</span>
                 </p>
                 <p className="text-gray-700" style={{ marginBottom: 6 }}>
-                  <strong className="text-gray-900 font-semibold">Email:</strong>{" "}
+                  <strong className="text-gray-900 font-semibold">
+                    Email:
+                  </strong>{" "}
                   <span className="text-gray-800">{req.donorId.email}</span>
                 </p>
                 <p className="text-gray-700">
-                  <strong className="text-gray-900 font-semibold">Address:</strong>{" "}
-                  <span className="text-gray-800">{req.donorId.manualLocation}</span>
+                  <strong className="text-gray-900 font-semibold">
+                    Address:
+                  </strong>{" "}
+                  <span className="text-gray-800">
+                    {req.donorId.manualLocation}
+                  </span>
                 </p>
               </div>
 
@@ -95,7 +111,10 @@ function MyRequests() {
                   className="border-2 border-green-400 bg-green-50 rounded-lg"
                   style={{ padding: 16, marginTop: 12 }}
                 >
-                  <p className="text-green-700 font-semibold" style={{ marginBottom: 6 }}>
+                  <p
+                    className="text-green-700 font-semibold"
+                    style={{ marginBottom: 6 }}
+                  >
                     ✔ Your request was accepted!
                   </p>
                   <p className="text-lg font-bold text-green-900">

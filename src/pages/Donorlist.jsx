@@ -6,48 +6,47 @@ function Donorlist() {
   const [donors, setDonors] = useState([]);
   const [loading, setLoading] = useState(false);
 
- const handleShowNearbyDonors = () => {
-  setLoading(true);
-  navigator.geolocation.getCurrentPosition(
-    async (position) => {
-      try {
-        const { latitude, longitude } = position.coords;
-        const baseurl = import.meta.env.VITE_API_URL;
-        const token = localStorage.getItem("token");
-        const loggedInUserId = localStorage.getItem("userId");
+  const handleShowNearbyDonors = () => {
+    setLoading(true);
+    navigator.geolocation.getCurrentPosition(
+      async (position) => {
+        try {
+          const { latitude, longitude } = position.coords;
+          const baseurl = import.meta.env.VITE_API_URL;
+          const token = localStorage.getItem("token");
+          const loggedInUserId = localStorage.getItem("userId");
 
-        const res = await axios.get(
-          `${baseurl}/donors/nearby?lat=${latitude}&lng=${longitude}&distance=5000`,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
+          const res = await axios.get(
+            `${baseurl}/donors/nearby?lat=${latitude}&lng=${longitude}&distance=5000`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
             },
+          );
+
+          // Ensure you compare with the correct field (_id or userId)
+          const filtered = res.data.filter((d) => d._id !== loggedInUserId);
+
+          if (filtered.length === 0) {
+            alert("No donors found within 5 km.");
           }
-        );
 
-        // Ensure you compare with the correct field (_id or userId)
-        const filtered = res.data.filter((d) => d._id !== loggedInUserId);
-
-        if (filtered.length === 0) {
-          alert("No donors found within 5 km.");
+          setDonors(filtered);
+        } catch (error) {
+          console.error("Error finding nearby donors:", error);
+          alert("Something went wrong while fetching nearby donors.");
+        } finally {
+          setLoading(false);
         }
-
-        setDonors(filtered);
-      } catch (error) {
-        console.error("Error finding nearby donors:", error);
-        alert("Something went wrong while fetching nearby donors.");
-      } finally {
+      },
+      (error) => {
         setLoading(false);
-      }
-    },
-    (error) => {
-      setLoading(false);
-      alert("Unable to get your location. Please enable location services.");
-      console.error(error);
-    }
-  );
-};
-
+        alert("Unable to get your location. Please enable location services.");
+        console.error(error);
+      },
+    );
+  };
 
   useEffect(() => {
     const fetchDonors = async () => {
@@ -68,13 +67,10 @@ function Donorlist() {
   }, []);
 
   return (
-    <div
-      className="min-h-screen bg-gradient-to-br from-red-50 via-pink-50 to-purple-50"
-      style={{ padding: "32px 24px" }}
-    >
-      <div className="max-w-7xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-red-50 via-pink-50 to-purple-50 px-6 py-8 md:px-12 md:py-12">
+      <div className="max-w-auto mx-auto">
         {/* Header Section */}
-        <div className="text-center" style={{ marginBottom: "40px" }}>
+        <div className="text-center mb-10 md:mb-12">
           <h1
             className="text-5xl font-bold bg-gradient-to-r from-red-600 to-pink-600 bg-clip-text text-transparent"
             style={{ marginBottom: "16px" }}
@@ -86,12 +82,7 @@ function Donorlist() {
           </p>
 
           {/* Nearby Donors Button */}
-          <button
-            className="bg-gradient-to-r from-red-500 to-pink-600 text-white font-semibold rounded-lg hover:from-red-600 hover:to-pink-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl inline-flex items-center"
-            style={{ padding: "14px 32px", gap: "8px" }}
-            onClick={handleShowNearbyDonors}
-            disabled={loading}
-          >
+          <button className="bg-gradient-to-r from-red-500 to-pink-600 text-white font-semibold rounded-lg hover:from-red-600 hover:to-pink-700 transform hover:scale-105 transition-all duration-200 shadow-lg hover:shadow-xl inline-flex items-center px-8 py-3 gap-2 md:gap-3">
             {loading ? (
               <>
                 <svg
@@ -188,7 +179,10 @@ function Donorlist() {
                 />
               </svg>
             </div>
-            <h3 className="text-2xl font-bold text-gray-800" style={{ marginBottom: "12px" }}>
+            <h3
+              className="text-2xl font-bold text-gray-800"
+              style={{ marginBottom: "12px" }}
+            >
               No Donors Found
             </h3>
             <p className="text-gray-600">

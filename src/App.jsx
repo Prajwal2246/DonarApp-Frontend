@@ -8,22 +8,51 @@ import Donorlist from "./pages/Donorlist";
 import MyRequests from "./pages/MyRequests";
 import ReceivedRequests from "./pages/ReceivedRequests";
 import Navbar from "./components/Navbar";
+import ProtectedRoute from "./components/ProtectedRoute";
 
 function App() {
   return (
-    <BrowserRouter>
+    <>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/register-as-donar" element={<RegisterAsDonar />} />
-        <Route path="/donors" element={<Donorlist />} />
-        <Route path="/requests" element={<MyRequests />} />
-        <Route path="/receivedRequest" element={<ReceivedRequests />} />
+        <Route
+          path="/register-as-donar"
+          element={
+            <ProtectedRoute>
+              <RegisterAsDonar />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/donors"
+          element={
+            <ProtectedRoute>
+              <Donorlist />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/requests"
+          element={
+            <ProtectedRoute>
+              <MyRequests />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/receivedRequest"
+          element={
+            <ProtectedRoute>
+              <ReceivedRequests />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
-    </BrowserRouter>
+    </>
   );
 }
 
